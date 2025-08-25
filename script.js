@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ------ Data Layer ------
     const STORAGE_KEY = 'ephy_v1';
-    const defaultState = { habits: [], tasks: [], settings: { personality: 'calm', notifications: false } };
+    const defaultState = { habits: [], tasks: [], settings: { personality: 'calm', notifications: false, airiUrl: '' } };
 
     function loadState() {
         try {
@@ -66,6 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const enableNotifsBtn = document.getElementById('enable-notifs-btn');
     const aiMessageEl = document.getElementById('ai-message');
     const orbEl = document.getElementById('avatar-orb');
+    const airiUrlInput = document.getElementById('airi-url');
+    const airiEmbedBtn = document.getElementById('airi-embed-btn');
+    const airiHideBtn = document.getElementById('airi-hide-btn');
+    const airiFrame = document.getElementById('airi-frame');
 
     // ------ AI Personality ------
     const PERSONALITIES = {
@@ -258,6 +262,21 @@ document.addEventListener('DOMContentLoaded', () => {
         saveState(state);
         aiMessageEl.textContent = ok ? 'Notifications enabled.' : 'Notifications not available.';
     });
+
+    // ------ AIRI Integration ------
+    airiUrlInput.value = state.settings.airiUrl || '';
+    function loadAiri(url) {
+        if (!url) return;
+        // Normalize URL and show iframe
+        const normalized = url.replace(/\/$/, '');
+        airiFrame.src = normalized;
+        airiFrame.style.display = 'block';
+        state.settings.airiUrl = normalized;
+        saveState(state);
+    }
+    airiEmbedBtn.addEventListener('click', () => loadAiri(airiUrlInput.value.trim()));
+    airiHideBtn.addEventListener('click', () => { airiFrame.style.display = 'none'; });
+    if (state.settings.airiUrl) loadAiri(state.settings.airiUrl);
 
     // ------ Charts (keep simple sample data) ------
     try {

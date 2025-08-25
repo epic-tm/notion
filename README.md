@@ -24,6 +24,23 @@ Files
 - `styles.css` — cosmic monochrome theme
 - `script.js` — data layer, streaks, reminders, and AI personality
 
+Optional: Run AIRI (VTuber) locally and embed
+--------------------------------------------
+1) Clone AIRI and install deps:
+```bash
+git clone https://github.com/moeru-ai/airi.git
+cd airi
+corepack enable
+corepack prepare pnpm@latest --activate
+pnpm install
+```
+2) Start AIRI (refer to their docs if multiple apps exist). Typical dev:
+```bash
+pnpm -C apps/web dev
+```
+3) In Ephy, open `index.html` in a browser. In the "AIRI VTuber" box, set the URL to your AIRI dev server (e.g., `http://localhost:5173`) or hosted `https://airi.moeru.ai`, then click "Load AIRI". The iframe is permissioned for camera and microphone.
+4) Permissions: your browser will ask for camera/mic when AIRI loads.
+
 Next steps (Phase 2/3 ideas)
 ----------------------------
 - Achievement tiers (Beginner → Legendary) with XP and levels
