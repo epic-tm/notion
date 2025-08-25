@@ -1,106 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Notion‑Lite — Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <meta name="description" content="Minimal Notion-like static dashboard (HTML/CSS/JS) for GitHub Pages">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mono Dash - All-in-One Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="logo">NL</div>
-        <div class="title">Notion‑Lite</div>
-      </div>
-      <nav class="nav">
-        <button class="nav-item active" data-view="dashboard">Dashboard</button>
-        <button class="nav-item" data-view="notes">Notes</button>
-        <button class="nav-item" data-view="projects">Projects</button>
-      </nav>
-      <div class="footer">Made with mild contempt and care</div>
-    </aside>
-
-    <main class="main">
-      <header class="topbar">
-        <input id="search" placeholder="Search pages, notes, anything..." />
-        <div class="user">Epic</div>
-      </header>
-
-      <section id="views" class="views">
-        <!-- Dashboard view -->
-        <div class="view" id="dashboard-view">
-          <h1 class="page-title">Dashboard</h1>
-          <div class="grid">
-            <article class="card">
-              <h2>Quick Notes</h2>
-              <ul id="quick-notes" class="list">
-                <!-- filled by JS -->
-              </ul>
-              <div class="card-actions">
-                <button id="new-quick-note">+ New Note</button>
-              </div>
-            </article>
-
-            <article class="card">
-              <h2>Projects</h2>
-              <div id="projects-grid" class="projects-grid">
-                <!-- filled by JS -->
-              </div>
-            </article>
-
-            <article class="card large">
-              <h2>Active Note</h2>
-              <div id="active-note" class="editor">
-                <input id="note-title" placeholder="Untitled" />
-                <textarea id="note-body" placeholder="Write something..."></textarea>
-                <div class="card-actions">
-                  <button id="save-note">Save</button>
-                  <button id="close-note">Close</button>
+    <div class="sidebar">
+        <div class="logo">Mono Dash</div>
+        <ul class="nav">
+            <li class="active">Dashboard</li>
+            <li>Tasks</li>
+            <li>Messages</li>
+            <li>Activity</li>
+            <li>Calendar</li>
+            <li>Options</li>
+            <li>Settings</li>
+            <li>Logout</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1>Make Things Simple!</h1>
+            <p>Management and planning in a simple and attractive style will bring you success.</p>
+        </div>
+        <div class="top-row">
+            <div class="tasks-section">
+                <h2>To Do</h2>
+                <ul id="task-list">
+                    <li>Work <span class="priority">High Priority</span></li>
+                    <!-- Add more via JS -->
+                </ul>
+                <input type="text" id="new-task-input" placeholder="New task">
+                <button id="add-task-btn">Add Task</button>
+            </div>
+            <div class="note-section">
+                <h2>Today's Note</h2>
+                <p>Going to the company & planning meetings for the week 🍊</p>
+                <span class="time">20 min ago</span>
+            </div>
+        </div>
+        <div class="meetings-section">
+            <h2>Meetings</h2>
+            <div class="meeting-card">
+                <h3>Meeting with Team Members</h3>
+                <p>Description: meeting to review the new website design with updated features...</p>
+                <span>08:00 Am - 10:00 Am</span>
+            </div>
+            <div class="meeting-card">
+                <h3>Meeting With The Sales Team</h3>
+                <p>Description: checking the sales of the month and estimating the costs and sales of the next month</p>
+                <span>11:00 Am - 02:00 Am</span>
+            </div>
+        </div>
+        <div class="projects-section">
+            <h2>Projects</h2>
+            <div class="project-card">
+                <h3>Design System</h3>
+                <p>Description: create a responsive design system for landing pages and projects, focusing on consistency, scalability, and reusable components.</p>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 70%;"></div>
                 </div>
-              </div>
-            </article>
-          </div>
+                <span>Progress: 70%</span>
+                <p>Participants: Design Team, Marketing Team, Development Team</p>
+            </div>
+            <!-- Add more via JS if needed -->
         </div>
-
-        <!-- Notes view -->
-        <div class="view hidden" id="notes-view">
-          <h1 class="page-title">Notes</h1>
-          <div class="notes-layout">
-            <aside class="notes-list">
-              <div class="list-header">
-                <h3>Your Notes</h3>
-                <button id="add-note">+ New</button>
-              </div>
-              <ul id="notes-list-ul" class="list">
-                <!-- JS -->
-              </ul>
-            </aside>
-            <section class="notes-editor">
-              <input id="note-title-2" placeholder="Select or create a note" />
-              <textarea id="note-body-2" placeholder="Note body..."></textarea>
-              <div class="card-actions">
-                <button id="save-note-2">Save</button>
-                <button id="delete-note-2">Delete</button>
-              </div>
-            </section>
-          </div>
+        <div class="analytics-section">
+            <h2>Analytics & Life Potential</h2>
+            <div class="radar-container">
+                <canvas id="main-radar-chart" width="300" height="300"></canvas>
+                <p>Main Radar: Physical, Creative, Mental, Social, Moral</p>
+            </div>
+            <div class="radar-container">
+                <canvas id="sub-radar-chart" width="300" height="300"></canvas>
+                <p>Sub Radar: Expanded Attributes (e.g., Willpower, Health, Mood, State Levels)</p>
+            </div>
+            <div class="activity-graph">
+                <canvas id="activity-chart" width="400" height="200"></canvas>
+            </div>
+            <p>13 Tasks Completed <span>80%</span></p>
         </div>
-
-        <!-- Projects view -->
-        <div class="view hidden" id="projects-view">
-          <h1 class="page-title">Projects</h1>
-          <div class="projects-grid" id="projects-view-grid">
-            <!-- JS -->
-          </div>
+        <div class="calendar-section">
+            <h2>Calendar</h2>
+            <div id="calendar-placeholder">Placeholder for interactive calendar. Integrate full calendar library later.</div>
+            <!-- JS for reminders -->
+            <button id="schedule-task-btn">Schedule Task & Set Reminder</button>
         </div>
-      </section>
-
-      <footer class="site-footer">Notion‑Lite • Static demo • Deploy to GitHub Pages</footer>
-    </main>
-  </div>
-
-  <script src="script.js"></script>
+        <div class="ai-section">
+            <h2>AIRI - AI Vtuber Placeholder</h2>
+            <p>Integrate AI Vtuber here for voice/text interaction later.</p>
+            <input type="text" placeholder="Type prompt to AIRI">
+            <button>Send (Placeholder)</button>
+            <div class="vtuber-placeholder">VTuber Avatar Placeholder</div>
+        </div>
+        <div class="anki-section">
+            <h2>Anki Integration Placeholder</h2>
+            <p>Integrate Anki for flashcards and spaced repetition here later.</p>
+        </div>
+    </div>
+    <div class="right-bar">
+        <div class="files-section">
+            <h2>My Files</h2>
+            <p>You have not added a file yet</p>
+            <button>Add File</button>
+        </div>
+        <div class="activity-section">
+            <h2>Activity</h2>
+            <button>Get The Report</button>
+            <!-- Graph placeholder -->
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
