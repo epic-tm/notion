@@ -1,144 +1,109 @@
-/* script.js — small interactivity */
-const views = {
-  dashboard: document.getElementById('dashboard-view'),
-  notes: document.getElementById('notes-view'),
-  projects: document.getElementById('projects-view'),
-};
+// script.js - Interactivity, charts, animations, task management, reminders.
 
-function switchView(name){
-  Object.values(views).forEach(v => v.classList.add('hidden'));
-  views[name].classList.remove('hidden');
-  document.querySelectorAll('.nav-item').forEach(btn=>{
-    btn.classList.toggle('active', btn.dataset.view === name);
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // Setup Main Radar Chart
+    const mainRadarCtx = document.getElementById('main-radar-chart').getContext('2d');
+    new Chart(mainRadarCtx, {
+        type: 'radar',
+        data: {
+            labels: ['Physical', 'Creative', 'Mental', 'Social', 'Moral'],
+            datasets: [{
+                label: 'Life Potential',
+                data: [80, 70, 90, 60, 85],
+                backgroundColor: 'rgba(170, 170, 170, 0.2)',
+                borderColor: '#888',
+                pointBackgroundColor: '#000'
+            }]
+        },
+        options: {
+            scales: {
+                r: { beginAtZero: true }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeInOutBounce'
+            }
+        }
+    });
 
-document.querySelectorAll('.nav-item').forEach(btn=>{
-  btn.addEventListener('click', ()=> switchView(btn.dataset.view));
+    // Setup Sub Radar Chart (more sections based on reference)
+    const subRadarCtx = document.getElementById('sub-radar-chart').getContext('2d');
+    new Chart(subRadarCtx, {
+        type: 'radar',
+        data: {
+            labels: ['Willpower', 'Health', 'Mood', 'Physical Lv', 'Psyche Lv', 'Intel Lv', 'Spirit Lv', 'Core Lv'],
+            datasets: [{
+                label: 'Expanded Attributes',
+                data: [70, 70, 70, 0, 7, 0, 0, 7],
+                backgroundColor: 'rgba(170, 170, 170, 0.2)',
+                borderColor: '#888',
+                pointBackgroundColor: '#000'
+            }]
+        },
+        options: {
+            scales: {
+                r: { beginAtZero: true }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeInOutBounce'
+            }
+        }
+    });
+
+    // Setup Activity Line Chart (like references)
+    const activityCtx = document.getElementById('activity-chart').getContext('2d');
+    new Chart(activityCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            datasets: [{
+                label: 'Activity',
+                data: [10, 20, 15, 25, 30],
+                borderColor: '#888',
+                backgroundColor: 'rgba(170, 170, 170, 0.2)'
+            }]
+        },
+        options: {
+            animation: {
+                duration: 1500
+            }
+        }
+    });
+
+    // Task Management
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const newTaskInput = document.getElementById('new-task-input');
+    const taskList = document.getElementById('task-list');
+
+    addTaskBtn.addEventListener('click', () => {
+        if (newTaskInput.value.trim()) {
+            const li = document.createElement('li');
+            li.textContent = newTaskInput.value;
+            li.classList.add('animated-task');
+            taskList.appendChild(li);
+            newTaskInput.value = '';
+        }
+    });
+
+    // Schedule Task & Reminder (simple example: alert after 5 seconds)
+    const scheduleTaskBtn = document.getElementById('schedule-task-btn');
+    scheduleTaskBtn.addEventListener('click', () => {
+        alert('Task scheduled! Reminder will pop up in 5 seconds.');
+        setTimeout(() => {
+            alert('Reminder: Your scheduled task is complete!');
+        }, 5000);
+    });
+
+    // Placeholder for AI and Anki interactions (expand later)
+    // For now, just console log inputs
+    const aiSendBtn = document.querySelector('.ai-section button');
+    const aiInput = document.querySelector('.ai-section input');
+    aiSendBtn.addEventListener('click', () => {
+        console.log('AIRI Prompt:', aiInput.value);
+        aiInput.value = '';
+    });
 });
 
-// Simple in-memory demo data (also stored in localStorage)
-const DB_KEY = 'notion_lite_demo';
-const defaultData = {
-  notes: [
-    {id: 'n1', title: 'Welcome', body: 'This is a small Notion-like demo. Click notes to edit.'},
-    {id: 'n2', title: 'Groceries', body: '- Milk\n- Eggs\n- Coffee'},
-  ],
-  projects: [
-    {id:'p1', title: 'Website Redesign', status: 'In Progress'},
-    {id:'p2', title: 'Study Plan', status: 'Planned'}
-  ],
-  activeNoteId: null
-};
-
-function loadData(){
-  const raw = localStorage.getItem(DB_KEY);
-  if(!raw) {
-    localStorage.setItem(DB_KEY, JSON.stringify(defaultData));
-    return JSON.parse(JSON.stringify(defaultData));
-  }
-  try { return JSON.parse(raw); } catch(e){ localStorage.removeItem(DB_KEY); return JSON.parse(JSON.stringify(defaultData)); }
-}
-function saveData(d){ localStorage.setItem(DB_KEY, JSON.stringify(d)); }
-
-let DATA = loadData();
-
-// Render helpers
-function renderQuickNotes(){
-  const ul = document.getElementById('quick-notes');
-  ul.innerHTML = '';
-  DATA.notes.slice(0,5).forEach(n=>{
-    const li = document.createElement('li'); li.textContent = n.title;
-    li.onclick = ()=> openNote(n.id);
-    ul.appendChild(li);
-  });
-}
-
-function renderProjectsGrid(el){
-  el.innerHTML = '';
-  DATA.projects.forEach(p=>{
-    const card = document.createElement('div'); card.className='project-card';
-    card.innerHTML = `<strong>${p.title}</strong><div class="muted">${p.status}</div>`;
-    el.appendChild(card);
-  });
-}
-
-function renderNotesList(){
-  const ul = document.getElementById('notes-list-ul'); ul.innerHTML='';
-  DATA.notes.forEach(n=>{
-    const li = document.createElement('li'); li.textContent = n.title;
-    li.onclick = ()=> selectNote(n.id);
-    ul.appendChild(li);
-  });
-}
-
-function openNote(id){
-  DATA.activeNoteId = id;
-  const note = DATA.notes.find(x=>x.id===id);
-  if(!note) return;
-  document.getElementById('note-title').value = note.title;
-  document.getElementById('note-body').value = note.body;
-  switchView('dashboard');
-  renderQuickNotes();
-}
-
-function selectNote(id){
-  const note = DATA.notes.find(x=>x.id===id);
-  if(!note) return;
-  document.getElementById('note-title-2').value = note.title;
-  document.getElementById('note-body-2').value = note.body;
-  DATA.activeNoteId = id;
-}
-
-document.getElementById('new-quick-note').addEventListener('click', ()=>{
-  const id = 'n'+Date.now();
-  DATA.notes.unshift({id, title: 'New note', body: ''});
-  saveData(DATA); renderQuickNotes(); renderNotesList();
-});
-
-document.getElementById('add-note').addEventListener('click', ()=>{
-  const id = 'n'+Date.now();
-  DATA.notes.unshift({id, title: 'New note', body: ''});
-  saveData(DATA); renderNotesList(); selectNote(id);
-});
-
-document.getElementById('save-note').addEventListener('click', ()=>{
-  const id = DATA.activeNoteId || ('n'+Date.now());
-  const title = document.getElementById('note-title').value || 'Untitled';
-  const body = document.getElementById('note-body').value || '';
-  const existing = DATA.notes.find(n=>n.id===id);
-  if(existing){ existing.title = title; existing.body = body; }
-  else { DATA.notes.unshift({id,title,body}); }
-  DATA.activeNoteId = id;
-  saveData(DATA); renderQuickNotes(); renderNotesList();
-});
-
-document.getElementById('save-note-2').addEventListener('click', ()=>{
-  const id = DATA.activeNoteId;
-  if(!id) return alert('Pick a note from the list or create a new one.');
-  const title = document.getElementById('note-title-2').value || 'Untitled';
-  const body = document.getElementById('note-body-2').value || '';
-  const existing = DATA.notes.find(n=>n.id===id);
-  if(existing){ existing.title = title; existing.body = body; saveData(DATA); renderQuickNotes(); renderNotesList(); }
-});
-
-document.getElementById('delete-note-2').addEventListener('click', ()=>{
-  const id = DATA.activeNoteId;
-  if(!id) return alert('No note selected to delete.');
-  DATA.notes = DATA.notes.filter(n=>n.id!==id);
-  DATA.activeNoteId = null;
-  saveData(DATA); renderQuickNotes(); renderNotesList();
-  document.getElementById('note-title-2').value=''; document.getElementById('note-body-2').value='';
-});
-
-document.getElementById('close-note').addEventListener('click', ()=>{
-  DATA.activeNoteId = null;
-  document.getElementById('note-title').value=''; document.getElementById('note-body').value='';
-  renderQuickNotes();
-});
-
-// Initial render
-renderQuickNotes();
-renderProjectsGrid(document.getElementById('projects-grid'));
-renderProjectsGrid(document.getElementById('projects-view-grid'));
-renderNotesList();
+// Add CSS for animated-task
+// In style.css, add: .animated-task { animation: fadeIn 0.5s; }
