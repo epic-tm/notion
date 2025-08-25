@@ -1,15 +1,17 @@
-/* style.css - Monochrome theme with grays, blacks, whites. Cool animations and interactivity. */
+/* styles.css - Cosmic monochrome theme for Ephy */
 
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0; /* Light gray background */
-    color: #333; /* Dark gray text */
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: radial-gradient(1200px 800px at 20% -10%, rgba(120,120,120,0.15), transparent),
+                radial-gradient(800px 600px at 100% 0%, rgba(160,160,160,0.12), transparent),
+                #0b0f14;
+    color: #e5e7eb;
     display: flex;
     height: 100vh;
     overflow: hidden;
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 0.8s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -19,9 +21,9 @@ body {
 
 .sidebar {
     width: 200px;
-    background-color: #ddd; /* Medium gray */
+    background-color: #0f141b;
     padding: 20px;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid rgba(255,255,255,0.06);
     animation: slideInLeft 0.5s ease-out;
 }
 
@@ -32,9 +34,9 @@ body {
 
 .logo {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 800;
     margin-bottom: 20px;
-    color: #000;
+    color: #fff;
 }
 
 .nav {
@@ -50,13 +52,13 @@ body {
 }
 
 .nav li:hover {
-    background-color: #ccc;
-    transform: scale(1.05);
+    background-color: rgba(255,255,255,0.06);
+    transform: translateX(2px);
 }
 
 .nav li.active {
-    background-color: #bbb;
-    border-radius: 5px;
+    background-color: rgba(255,255,255,0.12);
+    border-radius: 6px;
 }
 
 .main-content {
@@ -76,37 +78,38 @@ body {
     justify-content: space-between;
 }
 
-.tasks-section, .note-section, .meetings-section, .projects-section, .analytics-section, .calendar-section, .ai-section, .anki-section {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+.tasks-section, .note-section, .meetings-section, .projects-section, .analytics-section, .calendar-section, .ai-section, .anki-section, .habits-section {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(6px);
 }
 
-.tasks-section:hover, .note-section:hover, .meetings-section:hover, .projects-section:hover, .analytics-section:hover, .calendar-section:hover, .ai-section:hover, .anki-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+.tasks-section:hover, .note-section:hover, .meetings-section:hover, .projects-section:hover, .analytics-section:hover, .calendar-section:hover, .ai-section:hover, .anki-section:hover, .habits-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
 }
 
 .meeting-card, .project-card {
-    background-color: #eee;
+    background-color: rgba(255,255,255,0.06);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     margin: 10px 0;
 }
 
 .progress-bar {
-    background-color: #ddd;
+    background-color: rgba(255,255,255,0.08);
     height: 10px;
     border-radius: 5px;
     margin: 10px 0;
 }
 
 .progress {
-    background-color: #aaa;
+    background: linear-gradient(90deg, #93c5fd, #a78bfa, #f0abfc);
     height: 100%;
     border-radius: 5px;
     animation: progressAnim 2s ease-in-out;
@@ -124,9 +127,9 @@ body {
 
 .right-bar {
     width: 250px;
-    background-color: #ddd;
+    background-color: #0f141b;
     padding: 20px;
-    border-left: 1px solid #ccc;
+    border-left: 1px solid rgba(255,255,255,0.06);
     animation: slideInRight 0.5s ease-out;
 }
 
@@ -136,40 +139,76 @@ body {
 }
 
 .files-section, .activity-section {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
 }
 
 button {
-    background-color: #bbb;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+    border: 1px solid rgba(255,255,255,0.16);
+    padding: 10px 12px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    color: #e5e7eb;
+    transition: transform 0.2s, background 0.3s;
 }
 
 button:hover {
-    background-color: #999;
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.10));
 }
 
-input {
+input, select {
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.04);
+    color: #e5e7eb;
+    border-radius: 8px;
     margin-right: 10px;
 }
 
 .vtuber-placeholder {
-    width: 200px;
-    height: 200px;
-    background-color: #ccc;
-    border-radius: 50%;
-    margin: 20px auto;
+    display: none;
+}
+
+/* Habits */
+.habit-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+}
+.habit-item button {
+    margin-left: 8px;
+}
+.streak-badge {
+    font-weight: 700;
+    color: #a78bfa;
+}
+
+/* Avatar orb */
+#avatar-orb {
+    width: 140px;
+    height: 140px;
+    border-radius: 999px;
+    margin: 16px auto 4px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(167,139,250,0.6), rgba(15,20,27,0.9));
+    box-shadow: 0 0 40px rgba(167,139,250,0.45), inset 0 0 30px rgba(255,255,255,0.2);
+    animation: orbPulse 3s ease-in-out infinite;
+}
+
+@keyframes orbPulse {
+    0% { transform: scale(1); box-shadow: 0 0 34px rgba(167,139,250,0.35); }
+    50% { transform: scale(1.04); box-shadow: 0 0 60px rgba(167,139,250,0.55); }
+    100% { transform: scale(1); box-shadow: 0 0 34px rgba(167,139,250,0.35); }
+}
+
+.ai-message {
     text-align: center;
-    line-height: 200px;
-    color: #fff;
+    margin-top: 8px;
+    color: #cbd5e1;
 }
