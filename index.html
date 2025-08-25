@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notion‑Lite — Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Minimal Notion-like static dashboard (HTML/CSS/JS) for GitHub Pages">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">NL</div>
+        <div class="title">Notion‑Lite</div>
+      </div>
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard">Dashboard</button>
+        <button class="nav-item" data-view="notes">Notes</button>
+        <button class="nav-item" data-view="projects">Projects</button>
+      </nav>
+      <div class="footer">Made with mild contempt and care</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <input id="search" placeholder="Search pages, notes, anything..." />
+        <div class="user">Epic</div>
+      </header>
+
+      <section id="views" class="views">
+        <!-- Dashboard view -->
+        <div class="view" id="dashboard-view">
+          <h1 class="page-title">Dashboard</h1>
+          <div class="grid">
+            <article class="card">
+              <h2>Quick Notes</h2>
+              <ul id="quick-notes" class="list">
+                <!-- filled by JS -->
+              </ul>
+              <div class="card-actions">
+                <button id="new-quick-note">+ New Note</button>
+              </div>
+            </article>
+
+            <article class="card">
+              <h2>Projects</h2>
+              <div id="projects-grid" class="projects-grid">
+                <!-- filled by JS -->
+              </div>
+            </article>
+
+            <article class="card large">
+              <h2>Active Note</h2>
+              <div id="active-note" class="editor">
+                <input id="note-title" placeholder="Untitled" />
+                <textarea id="note-body" placeholder="Write something..."></textarea>
+                <div class="card-actions">
+                  <button id="save-note">Save</button>
+                  <button id="close-note">Close</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Notes view -->
+        <div class="view hidden" id="notes-view">
+          <h1 class="page-title">Notes</h1>
+          <div class="notes-layout">
+            <aside class="notes-list">
+              <div class="list-header">
+                <h3>Your Notes</h3>
+                <button id="add-note">+ New</button>
+              </div>
+              <ul id="notes-list-ul" class="list">
+                <!-- JS -->
+              </ul>
+            </aside>
+            <section class="notes-editor">
+              <input id="note-title-2" placeholder="Select or create a note" />
+              <textarea id="note-body-2" placeholder="Note body..."></textarea>
+              <div class="card-actions">
+                <button id="save-note-2">Save</button>
+                <button id="delete-note-2">Delete</button>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Projects view -->
+        <div class="view hidden" id="projects-view">
+          <h1 class="page-title">Projects</h1>
+          <div class="projects-grid" id="projects-view-grid">
+            <!-- JS -->
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">Notion‑Lite • Static demo • Deploy to GitHub Pages</footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
